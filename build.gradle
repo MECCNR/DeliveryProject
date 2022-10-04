@@ -24,5 +24,3 @@ test {
     useJUnitPlatform()
     systemProperty 'selenide.headless=true', System.getProperty('selenide.headless=true', 'selenide.timeout=15000')
 }
-
-// MLG-TAS сборка ;). Сделана для большей наглядности

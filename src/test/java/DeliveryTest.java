@@ -34,25 +34,5 @@ public class DeliveryTest {
         $$("button").find(exactText("Забронировать")).click();
         $(withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
     }
-
-/*    @Test
-    void actionComplexTest() {
-        $("[data-test-id=city] input").setValue("Мо");
-        $$(".menu-item__control").find(exactText("Москва")).click();
-        $("[data-test-id=name] input").setValue("Иванович Иван");
-        $("[data-test-id=phone] input").setValue("+73215646546");
-        $("[data-test-id=agreement]").click();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        LocalDate currentDate = LocalDate.now();
-        Date date = java.sql.Date.valueOf(currentDate);
-        long realtime = date.getTime() + 604800000;
-        String number = String.valueOf(realtime);
-        $("[data-test-id=date] input").doubleClick();
-        $x("[data-day]").shouldBe(exactValue(number)).click();
-        $$("button").find(exactText("Забронировать")).click();
-        $(withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
-
-        >fail
-    }*/
 }
 
