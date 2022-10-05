@@ -1,11 +1,11 @@
+import com.codeborne.selenide.Condition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.withText;
@@ -18,21 +18,23 @@ public class DeliveryTest {
         open("http://localhost:9999");
     }
 
+    public String generateDate(int days) {
+        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    }
+
     @Test
-    void CardTest() {
+    void cardDeliveryTest() {
         $("[data-test-id=city] input").setValue("Иркутск");
         $("[data-test-id=name] input").setValue("Иванович Иван");
         $("[data-test-id=phone] input").setValue("+73215646546");
         $("[data-test-id=agreement]").click();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        LocalDate currentDate = LocalDate.now().plusDays(5);
-        Date date = java.sql.Date.valueOf(currentDate);
-        String result = formatter.format(date);
+        String planningDate = generateDate(5);
         $("[data-test-id=date] input").doubleClick();
         $("[data-test-id=date] input").sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id=date] input").setValue(result);
+        $("[data-test-id=date] input").setValue(planningDate);
         $$("button").find(exactText("Забронировать")).click();
         $(withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
+        $(".notification__content").shouldHave(Condition.text("Встреча успешно забронирована на " + planningDate), Duration.ofSeconds(15)).shouldBe(Condition.visible);
     }
 }
 
